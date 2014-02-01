@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
-include_once('../classes/DateUtils.php');
+include_once('classes/DateUtils.php');
 class DateUtilsTest extends PHPUnit_Framework_TestCase
 {
     private $dateUtils;
