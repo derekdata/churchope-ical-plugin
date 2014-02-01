@@ -12,7 +12,14 @@ This plugin should work on PHP 5.3.x or greater.
 Installation
 ============
 
-Unzip the distribution in your plugins directory and activate the plugin in the WordPress administration interface.
+This section describes how to install the plugin and get it working.
+
+e.g.
+
+1. Upload all files to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Ensure you have the proper timezone set in the WordPress settings under "Settings-->General".  For best results, choose the closest city in your timezone rather than a UTC/GMT offset.
+
 
 Using the Plugin
 ================
