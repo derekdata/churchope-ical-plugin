@@ -3,6 +3,8 @@ churchope-ical-plugin
 
 WordPress plugin to generate iCalendar files from Event posts.
 
+This plugin allows for the import of the WordPress Event posts into into Google Calendar, Apple iCal, Android Calendar, Microsoft Outlook, etc.
+
 This plugin is specifically aligned with the Churchope WordPress Theme; though it could be adapted for other themes as well.
 
 This plugin should work on PHP 5.3.x or greater.
