@@ -26,8 +26,9 @@ class DateUtilsTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $timezone = 'America/New_York';
+        $gmtOffset = -4;
         date_default_timezone_set($timezone);
-        $this->dateUtils = new DateUtils($timezone);
+        $this->dateUtils = new DateUtils($timezone, $gmtOffset);
     }
 
     public function testGetMonthAndYearFromDate()
@@ -74,6 +75,26 @@ class DateUtilsTest extends PHPUnit_Framework_TestCase
 
         $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010', new DateInterval('PT1H'));
         $this->assertEquals($iCalString, "20101205T060000Z");
+
+    }
+
+    public function testClassTimezoneSetup_nullTimezone()
+    {
+
+        $gmtOffset = -10;
+        $this->dateUtils = new DateUtils(null, $gmtOffset);
+
+        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010');
+        $this->assertEquals($iCalString, "20101205T090000Z");
+
+        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010');
+        $this->assertEquals($iCalString, "20101205T090000Z");
+
+        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010', new DateInterval('P1D'));
+        $this->assertEquals($iCalString, "20101206T090000Z");
+
+        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010', new DateInterval('PT1H'));
+        $this->assertEquals($iCalString, "20101205T100000Z");
 
     }
 }

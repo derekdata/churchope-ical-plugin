@@ -22,14 +22,62 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class DateUtils
 {
 
-    public $timeZoneString;
+    /**
+     * @var String time zone string representing time zone of dates passed into this class http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+     */
+    private $timeZone;
 
     /**
-     * @param $timeZoneString String time zone string representing time zone of dates passed into this class http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+     * @param String $timeZone String time zone string representing time zone of dates passed into this class http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+     * @param Integer $gmtOffset integer representing offset from GMT
      */
-    function __construct($timeZoneString)
+    function __construct($timeZone, $gmtOffset)
     {
-        $this->timeZoneString = $timeZoneString;
+        $this->timeZone = $this->getTimezoneString($timeZone, $gmtOffset);
+    }
+
+    /**
+     * Returns the timezone string for a site, even if it's set to a UTC offset
+     *
+     * Adapted from http://www.php.net/manual/en/function.timezone-name-from-abbr.php#89155
+     * Inspiration from http://www.skyverge.com/blog/down-the-rabbit-hole-wordpress-and-timezones/
+     *
+     * @param String $timeZoneString timezone (can be null) - may br sourced from WordPress 'timezone_string'
+     * @param Integer $gmtOffset GMT offset
+     * @return string valid PHP timezone string
+     */
+    private function getTimezoneString($timeZoneString, $gmtOffset)
+    {
+
+        // if site timezone string exists, return it
+        if ($timezone = $timeZoneString)
+            return $timezone;
+
+        // get UTC offset, if it isn't set then return UTC
+        if (0 === ($utc_offset = $gmtOffset))
+            return 'UTC';
+
+        // adjust UTC offset from hours to seconds
+        $utc_offset *= 3600;
+
+        // attempt to guess the timezone string from the UTC offset
+        $timezone = timezone_name_from_abbr('', $utc_offset);
+
+        // last try, guess timezone string manually
+        if (false === $timezone) {
+
+            $is_dst = date('I');
+
+            foreach (timezone_abbreviations_list() as $abbr) {
+                foreach ($abbr as $city) {
+                    if ($city['dst'] == $is_dst && $city['offset'] == $utc_offset)
+                        return $city['timezone_id'];
+                }
+            }
+        }
+
+        // fallback to UTC
+        return 'UTC';
     }
 
     /**
@@ -43,7 +91,7 @@ class DateUtils
     {
         $format = 'Ymd\THis\Z';
 
-        $datetime = date_create($string, new DateTimeZone($this->timeZoneString));
+        $datetime = date_create($string, new DateTimeZone($this->timeZone));
         if (!$datetime)
             return gmdate($format, 0);
         $datetime->setTimezone(new DateTimeZone('UTC'));

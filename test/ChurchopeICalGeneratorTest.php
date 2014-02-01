@@ -25,11 +25,13 @@ class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
 {
 
     private $timezone;
+    private $gmtOffset;
 
     public function setUp()
     {
 
         $this->timezone = 'America/New_York';
+        $this->gmtOffset = -4;
         date_default_timezone_set($this->timezone);
 
     }
@@ -49,6 +51,8 @@ class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
          * BEGIN Setup ChurchopeFunctionProxy stub
          */
         $churchHopeFunctionProxyStub = $this->getMock('ChurchopeFunctionProxy', array(), array(null));
+
+        $events = array();
 
         for ($i = 1; $i <= $eventsPerDay; $i++) {
             $event = new StdClass();
@@ -92,7 +96,7 @@ class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
          * END Setup WordPressFunctionProxy stub
          */
 
-        $churchopeICalGenerator = new ChurchopeICalGenerator($this->timezone, $churchHopeFunctionProxyStub, $siteName, $siteUrl, $WordPressFunctionProxyStub, $shortName);
+        $churchopeICalGenerator = new ChurchopeICalGenerator($this->timezone, $churchHopeFunctionProxyStub, $siteName, $siteUrl, $WordPressFunctionProxyStub, $shortName, $this->gmtOffset);
         $output = $churchopeICalGenerator->getICalData();
 
         /**

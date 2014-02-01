@@ -60,17 +60,18 @@ class ChurchopeICalGenerator
     private $shortName;
 
     /**
-     * @param $timezone String
-     * @param $churchopeFunctionProxy ChurchopeFunctionProxy
-     * @param $siteName String
-     * @param $siteUrl String
-     * @param $wordPressFunctionProxy WordPressFunctionProxy
-     * @param $shortName String
+     * @param String $timezone
+     * @param ChurchopeFunctionProxy $churchopeFunctionProxy
+     * @param String $siteName
+     * @param String $siteUrl
+     * @param WordPressFunctionProxy $wordPressFunctionProxy
+     * @param String $shortName
+     * @param Integer $gmtOffset offset from GMT
      */
-    function __construct($timezone, ChurchopeFunctionProxy $churchopeFunctionProxy, $siteName, $siteUrl, $wordPressFunctionProxy, $shortName)
+    function __construct($timezone, ChurchopeFunctionProxy $churchopeFunctionProxy, $siteName, $siteUrl, WordPressFunctionProxy $wordPressFunctionProxy, $shortName, $gmtOffset)
     {
         $this->timezone = $timezone;
-        $this->dateUtils = new DateUtils($timezone);
+        $this->dateUtils = new DateUtils($timezone, $gmtOffset);
         $this->churchopeFunctionProxy = $churchopeFunctionProxy;
         $this->siteName = $siteName;
         $this->siteUrl = $siteUrl;

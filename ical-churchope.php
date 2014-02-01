@@ -2,7 +2,7 @@
 /*
 Plugin Name: CHURCHOPE Theme iCal Generator
 Plugin URI: http://wordpress.com/
-Description: Creates an iCal feed from the calendar functions in the CHURCHOPE Wordpress Theme.  Could be modified to work with any custom event post type; contact the author at web.development.help@gmail.com for details.
+Description: Creates an iCalendar file/feed from the calendar functions in the CHURCHOPE WordPress Theme.  Could be modified to work with any custom event post type; contact the author at web.development.help@gmail.com for details.
 Version: 1.0
 Author: Derek
 Author URI: https://github.com/derekdata
@@ -37,13 +37,14 @@ function printICalData()
 {
 
     $timezoneString = get_option('timezone_string');
+    $gmtOffset = get_option('gmt_offset', 0);
 
     $blogName = strip_tags(get_bloginfo('name'));
     $blogUrl = strip_tags(get_bloginfo('home'));
 
     $widgetEvent = new Widget_Event();
 
-    $churchopeICalGenerator = new ChurchopeICalGenerator($timezoneString, new ChurchopeFunctionProxy($widgetEvent), $blogName, $blogUrl, new WordPressFunctionProxy(), SHORTNAME);
+    $churchopeICalGenerator = new ChurchopeICalGenerator($timezoneString, new ChurchopeFunctionProxy($widgetEvent), $blogName, $blogUrl, new WordPressFunctionProxy(), SHORTNAME, $gmtOffset);
 
     if (!defined('DEBUG')) {
         header('Content-type: text/calendar');
