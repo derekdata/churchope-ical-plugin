@@ -67,14 +67,15 @@ class ChurchopeICalGenerator
      * @param $wordPressFunctionProxy WordPressFunctionProxy
      * @param $shortName String
      */
-    function __construct($timezone, ChurchopeFunctionProxy $churchopeFunctionProxy, $siteName, $siteUrl, $wordPressFunctionProxy, $shortName) {
+    function __construct($timezone, ChurchopeFunctionProxy $churchopeFunctionProxy, $siteName, $siteUrl, $wordPressFunctionProxy, $shortName)
+    {
         $this->timezone = $timezone;
         $this->dateUtils = new DateUtils($timezone);
         $this->churchopeFunctionProxy = $churchopeFunctionProxy;
-        $this->siteName=$siteName;
-        $this->siteUrl=$siteUrl;
-        $this->wordPressFunctionProxy=$wordPressFunctionProxy;
-        $this->shortName=$shortName;
+        $this->siteName = $siteName;
+        $this->siteUrl = $siteUrl;
+        $this->wordPressFunctionProxy = $wordPressFunctionProxy;
+        $this->shortName = $shortName;
     }
 
     /**
@@ -90,7 +91,7 @@ class ChurchopeICalGenerator
         $eventsString = '';
 
         //setup date period variables for looping
-        $period =$this->dateUtils->getPeriod();
+        $period = $this->dateUtils->getPeriod();
 
         foreach ($period as $dt) {
 
@@ -99,7 +100,6 @@ class ChurchopeICalGenerator
             $eventsString = $this->createICalEventsFromCalendarEvents($calendarEvents, $year, $month, $domain);
 
         }
-
 
 
         $content = <<<CONTENT
@@ -117,16 +117,6 @@ CONTENT;
 
         return $content;
     }
-
-    public function printICalData() {
-        if (!defined('DEBUG')) {
-            header('Content-type: text/calendar');
-            header('Content-Disposition: attachment; filename="ical.ics"');
-        }
-
-        echo getICalData();
-    }
-
 
     /**
      * @param $calendarEvents array of event posts
@@ -212,21 +202,6 @@ EVENT;
         return $eventsString;
     }
 
-
-    /**
-     * Register function to be called by feed
-     */
-    public function generateICalDataFeed()
-    {
-        $this->wordPressFunctionProxy->add_feed_proxy('events-ical', 'printICalData');
-    }
-
-    /**
-     * Register & initialize feed
-     */
-    public function addGenerateICalDataFeedAction()
-    {
-        $this->wordPressFunctionProxy->add_action_proxy('init', 'generateICalDataFeed');
-    }
 }
+
 ?>

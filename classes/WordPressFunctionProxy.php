@@ -1,4 +1,5 @@
 <?php
+
 /*
 Copyright 2014 Derek - web.development.help@gmail.com
 
@@ -18,13 +19,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
-class WordPressFunctionProxy {
+class WordPressFunctionProxy
+{
 
     /**
      * @param $postId
      * @return mixed
      */
-    function get_post_proxy($postId) {
+    function get_post_proxy($postId)
+    {
         return get_post($postId);
     }
 
@@ -32,7 +35,8 @@ class WordPressFunctionProxy {
      * @param $postId
      * @return mixed
      */
-    function get_permalink_proxy($postId) {
+    function get_permalink_proxy($postId)
+    {
         return get_permalink($postId);
     }
 
@@ -42,7 +46,8 @@ class WordPressFunctionProxy {
      * @param $single
      * @return mixed
      */
-    function get_post_meta_proxy($post_id, $key, $single) {
+    function get_post_meta_proxy($post_id, $key, $single)
+    {
         return get_post_meta($post_id, $key, $single);
     }
 
@@ -51,8 +56,9 @@ class WordPressFunctionProxy {
      * @param $function
      * @return mixed
      */
-    function add_feed_proxy($feedname, $function) {
-        return add_feed( $feedname, $function);
+    function add_feed_proxy($feedname, $function)
+    {
+        return add_feed($feedname, $function);
     }
 
     /**
@@ -62,7 +68,8 @@ class WordPressFunctionProxy {
      * @param $accepted_args
      * @return mixed
      */
-    function add_action_proxy($hook, $function_to_add, $priority=null, $accepted_args=null) {
+    function add_action_proxy($hook, $function_to_add, $priority = null, $accepted_args = null)
+    {
         return add_action($hook, $function_to_add, $priority, $accepted_args);
     }
 

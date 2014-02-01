@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 include_once('classes/DateUtils.php');
+
 class DateUtilsTest extends PHPUnit_Framework_TestCase
 {
     private $dateUtils;
@@ -59,19 +60,20 @@ class DateUtilsTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testConvertDateStringToGMTiCalString() {
+    public function testConvertDateStringToGMTiCalString()
+    {
 
         $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 September 2010');
-        $this->assertEquals($iCalString,"20100905T040000Z");
+        $this->assertEquals($iCalString, "20100905T040000Z");
 
         $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010');
-        $this->assertEquals($iCalString,"20101205T050000Z");
+        $this->assertEquals($iCalString, "20101205T050000Z");
 
-        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010',new DateInterval('P1D'));
-        $this->assertEquals($iCalString,"20101206T050000Z");
+        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010', new DateInterval('P1D'));
+        $this->assertEquals($iCalString, "20101206T050000Z");
 
-        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010',new DateInterval('PT1H'));
-        $this->assertEquals($iCalString,"20101205T060000Z");
+        $iCalString = $this->dateUtils->convertDateStringToGMTiCalString('5 December 2010', new DateInterval('PT1H'));
+        $this->assertEquals($iCalString, "20101205T060000Z");
 
     }
 }

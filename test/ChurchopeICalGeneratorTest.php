@@ -20,19 +20,22 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 include_once('classes/ChurchopeICalGenerator.php');
 include_once('classes/ChurchopeFunctionProxy.php');
 include_once('classes/WordPressFunctionProxy.php');
+
 class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
 {
 
     private $timezone;
 
-    public function setUp() {
+    public function setUp()
+    {
 
         $this->timezone = 'America/New_York';
         date_default_timezone_set($this->timezone);
 
     }
 
-    public function testGetICalData() {
+    public function testGetICalData()
+    {
 
         /**
          * Setup variables for test
@@ -40,17 +43,17 @@ class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
         $siteName = 'All your base are belong to us';
         $siteUrl = 'https://www.kernel.org/';
         $shortName = 'ch';
-        $eventsPerDay=4;
+        $eventsPerDay = 4;
 
         /**
          * BEGIN Setup ChurchopeFunctionProxy stub
          */
         $churchHopeFunctionProxyStub = $this->getMock('ChurchopeFunctionProxy', array(), array(null));
 
-        for ($i=1; $i<=$eventsPerDay; $i++) {
+        for ($i = 1; $i <= $eventsPerDay; $i++) {
             $event = new StdClass();
-            $event->post_id=$i;
-            $events[$i-1] = $event;
+            $event->post_id = $i;
+            $events[$i - 1] = $event;
         }
 
         $eventsArray = array('01' => $events, '02' => $events);
@@ -68,11 +71,11 @@ class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
         $WordPressFunctionProxyStub = $this->getMock('WordPressFunctionProxy');
 
         $post = new StdClass();
-        $post->ID=1;
-        $post->post_status='publish';
-        $post->post_title='post title';
-        $post->post_content='post_content';
-        $post->post_date='2013-09-29 10:52:11';
+        $post->ID = 1;
+        $post->post_status = 'publish';
+        $post->post_title = 'post title';
+        $post->post_content = 'post_content';
+        $post->post_date = '2013-09-29 10:52:11';
 
         $WordPressFunctionProxyStub->expects($this->any())
             ->method('get_post_proxy')
@@ -90,7 +93,7 @@ class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
          */
 
         $churchopeICalGenerator = new ChurchopeICalGenerator($this->timezone, $churchHopeFunctionProxyStub, $siteName, $siteUrl, $WordPressFunctionProxyStub, $shortName);
-        $output=$churchopeICalGenerator->getICalData();
+        $output = $churchopeICalGenerator->getICalData();
 
         /**
          * Assertions
@@ -99,10 +102,10 @@ class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
          */
 
         //ensure that UID appears once per event
-        $this->assertEquals(substr_count($output,'UID'),count($eventsArray)*$eventsPerDay);
+        $this->assertEquals(substr_count($output, 'UID'), count($eventsArray) * $eventsPerDay);
 
         //website address shoudld be seen once in the header and once per event
-        $this->assertEquals(substr_count($output,$siteUrl),(count($eventsArray)*$eventsPerDay) + 1);
+        $this->assertEquals(substr_count($output, $siteUrl), (count($eventsArray) * $eventsPerDay) + 1);
 
         $expectedOutput = "BEGIN:VCALENDAR
 VERSION:2.0
@@ -115,7 +118,7 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH";
 
         foreach ($eventsArray as $dayNumber => $events) {
-            for ($i=1; $i<=$eventsPerDay; $i++) {
+            for ($i = 1; $i <= $eventsPerDay; $i++) {
                 $expectedOutput .= "
 BEGIN:VEVENT
 UID:1-201501${dayNumber}T053000Z@www.kernel.org
@@ -132,7 +135,7 @@ END:VEVENT";
 
         $expectedOutput .= "\nEND:VCALENDAR";
 
-        $this->assertEquals($expectedOutput,$output);
+        $this->assertEquals($expectedOutput, $output);
     }
 
 }

@@ -28,20 +28,40 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 include_once('classes/ChurchopeICalGenerator.php');
 include_once('classes/WordPressFunctionProxy.php');
-include_once('classes/ChurchHopeFunctionProxy.php');
+include_once('classes/ChurchopeFunctionProxy.php');
 
 /**
- * This file is responsible for constructing the plugin and injecting needed dependencies.
+ * Initialize & inject dependencies and call function to get iCalendar data
  */
+function printICalData()
+{
 
-$timezoneString=get_option( 'timezone_string' );
+    $timezoneString = get_option('timezone_string');
 
-$blogName = strip_tags(get_bloginfo('name'));
-$blogUrl = strip_tags(get_bloginfo('home'));
+    $blogName = strip_tags(get_bloginfo('name'));
+    $blogUrl = strip_tags(get_bloginfo('home'));
 
-$widgetEvent = new Widget_Event();
+    $widgetEvent = new Widget_Event();
 
-$churchopeICalGenerator = new ChurchopeICalGenerator($timezoneString, new ChurchopeFunctionProxy($widgetEvent), $blogName, $blogUrl, new WordPressFunctionProxy(), SHORTNAME);
-$churchopeICalGenerator->addGenerateICalDataFeedAction();
+    $churchopeICalGenerator = new ChurchopeICalGenerator($timezoneString, new ChurchopeFunctionProxy($widgetEvent), $blogName, $blogUrl, new WordPressFunctionProxy(), SHORTNAME);
+
+    if (!defined('DEBUG')) {
+        header('Content-type: text/calendar');
+        header('Content-Disposition: attachment; filename="ical.ics"');
+    }
+
+    echo $churchopeICalGenerator->getICalData();
+}
+
+/**
+ * Register function to be called by feed
+ */
+function generateICalDataFeed()
+{
+    add_feed('events-ical', 'printICalData');
+}
+
+add_action('init', 'generateICalDataFeed');
+
 
 ?>

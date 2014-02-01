@@ -1,4 +1,5 @@
 <?php
+
 /*
 Copyright 2014 Derek - web.development.help@gmail.com
 
@@ -18,7 +19,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
-class ChurchopeFunctionProxy {
+class ChurchopeFunctionProxy
+{
 
     /**
      * @var Widget_Event class provided by churchope theme
@@ -28,11 +30,13 @@ class ChurchopeFunctionProxy {
     /**
      * @param Widget_Event $widgetEvent
      */
-    public function __construct($widgetEvent) {
+    public function __construct($widgetEvent)
+    {
         $this->widgetEvent = $widgetEvent;
     }
 
-    public function getMonthEvents_proxy() {
+    public function getMonthEvents_proxy()
+    {
         return $this->widgetEvent->getMonthEvents();
     }
 
