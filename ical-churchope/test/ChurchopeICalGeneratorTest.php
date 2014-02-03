@@ -17,9 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
-include_once('classes/ChurchopeICalGenerator.php');
-include_once('classes/ChurchopeFunctionProxy.php');
-include_once('classes/WordPressFunctionProxy.php');
+include_once('ical-churchope/classes/ChurchopeICalGenerator.php');
+include_once('ical-churchope/classes/ChurchopeFunctionProxy.php');
+include_once('ical-churchope/classes/WordPressFunctionProxy.php');
 
 class ChurchopeICalGeneratorTest extends PHPUnit_Framework_TestCase
 {
