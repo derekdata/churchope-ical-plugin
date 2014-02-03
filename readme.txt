@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: Derek
+Contributors: derekdata
 Donate link: http://goo.gl/A6xFW9
 Tags: churchope, ical, calendar
 Requires at least: 3.6
