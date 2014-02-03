@@ -32,3 +32,4 @@ Other information
 =================
 
 CI: https://travis-ci.org/derekdata/churchope-ical-plugin
+WordPress Plugin Directory: http://wordpress.org/plugins/churchope-theme-icalendar-generator/
