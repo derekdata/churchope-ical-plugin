@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/derekdata/churchope-ical-plugin.png?branch=master)](https://travis-ci.org/derekdata/churchope-ical-plugin)
 churchope-ical-plugin
 =====================
 
